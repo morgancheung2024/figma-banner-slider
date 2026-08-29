@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Banner 轮播</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #eef0f4;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .slider {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    height: clamp(360px, 62vh, 760px);
+    background: #f5f5f7;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: #1d1d1f;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 5;
+  }
+  .arrow:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+  .arrow.prev { left: 16px; }
+  .arrow.next { right: 16px; }
+  .dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .dot.active { background: #1d1d1f; transform: scale(1.25); }
+</style>
+</head>
+<body>
+  <div class="slider" id="slider">
+    <div class="slide active"><img src="banner1.png" alt="数据担忧？免费&不设限！" /></div>
+    <div class="slide"><img src="banner2.png" alt="移动端也好用的标注工具！完美适配 Orion 手机浏览器" /></div>
+    <div class="slide"><img src="banner3.png" alt="笔记吃灰？/ 回顾费劲？" /></div>
+    <div class="slide"><img src="banner4.png" alt="背单词一条龙" /></div>
+    <div class="slide"><img src="banner5.png" alt="真实展示" /></div>
+
+    <button class="arrow prev" aria-label="上一张">&#10094;</button>
+    <button class="arrow next" aria-label="下一张">&#10095;</button>
+
+    <div class="dots" id="dots"></div>
+  </div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsBox = document.getElementById('dots');
+  const slider = document.getElementById('slider');
+  let current = 0;
+  let timer = null;
+  const INTERVAL = 4000;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 张');
+    dot.addEventListener('click', () => { show(i); restart(); });
+    dotsBox.appendChild(dot);
+  });
+  const dots = Array.from(dotsBox.children);
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  }
+  function next() { show(current + 1); }
+  function start() { timer = setInterval(next, INTERVAL); }
+  function stop() { clearInterval(timer); }
+  function restart() { stop(); start(); }
+
+  document.querySelector('.arrow.prev').addEventListener('click', () => { show(current - 1); restart(); });
+  document.querySelector('.arrow.next').addEventListener('click', () => { show(current + 1); restart(); });
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+
+  start();
+</script>
+</body>
+</html>
