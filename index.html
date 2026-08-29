@@ -3,19 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Banner 全屏轮播 · PNG 版</title>
+<title>Banner 全屏轮播 · 6 张 PNG</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%;overflow:hidden;background:#000}
   .slider{position:relative;width:100vw;height:100vh;overflow:hidden;background:#000}
-  .slide{position:absolute;inset:0;opacity:0;transform:scale(1.015);transition:opacity .55s ease,transform .55s ease;display:flex;align-items:center;justify-content:center;padding:0}
+  .slide{position:absolute;inset:0;opacity:0;transform:scale(1.015);transition:opacity .55s ease,transform .55s ease;display:flex;align-items:center;justify-content:center}
   .slide.active{opacity:1;transform:scale(1)}
   .slide img{width:100%;height:100%;object-fit:contain;display:block}
-  .s1{background:#39FF14}
-  .s2{background:#00E5FF}
-  .s3{background:#111}
-  .s4{background:#D1D1D1}
-  .s5{background:#2F2F2F}
+  .s1{background:#39FF14}.s2{background:#00E5FF}.s3a{background:#FEF000}.s3b{background:#DD9DFF}.s4{background:#D1D1D1}.s5{background:#2F2F2F}
   .arrow{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border:2px solid #000;border-radius:50%;background:rgba(255,255,255,.9);color:#000;font-size:22px;cursor:pointer;display:grid;place-items:center;z-index:6;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:transform .15s}
   .arrow:hover{transform:translateY(-50%) scale(1.06)}
   .arrow.prev{left:18px}.arrow.next{right:18px}
@@ -28,7 +24,8 @@
 <div class="slider" id="slider">
   <div class="slide s1 active"><img src="banner1.png" alt="数据担忧？免费&不设限！"></div>
   <div class="slide s2"><img src="banner2.png" alt="移动端也好用的标注工具"></div>
-  <div class="slide s3"><img src="banner3.png" alt="笔记吃灰？/ 回顾费劲？"></div>
+  <div class="slide s3a"><img src="banner3a.png" alt="笔记吃灰？让笔记在新文章中自动复现！"></div>
+  <div class="slide s3b"><img src="banner3b.png" alt="回顾费劲？卡牌式主动回顾笔记"></div>
   <div class="slide s4"><img src="banner4.png" alt="背单词一条龙"></div>
   <div class="slide s5"><img src="banner5.png" alt="真实展示"></div>
   <button class="arrow prev" aria-label="上一张">‹</button>
